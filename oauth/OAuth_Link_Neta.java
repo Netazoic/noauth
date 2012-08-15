@@ -6,6 +6,9 @@ public class OAuth_Link_Neta extends OAuth_Link {
 
 
 	/*
+	 *  This is an example of an insantiating class for the Linkedin
+	 *  client.
+
 	 * Company:
 	Netazoic
 
@@ -13,25 +16,24 @@ public class OAuth_Link_Neta extends OAuth_Link {
 	Netazoic
 
 	API Key:
-	991eu7d3kl1h
+	991bcd232alkj223
 
 	Secret Key:
-	tw08x8LPBX0nVu5T
+	tw0823232323u5T
 
 	OAuth User Token:
-	e9e98530-67ff-4914-9af0-be53b7b1f912
+	e9e89530-9999-4319-9bo0-be32a9ckf912
 
 	OAuth User Secret:
-	38407e78-8c45-44e7-a653-a8e6e511ee8d
+	38407e78-9999-4319-a653-ab96e512ef8d
 	 */
 	
-	private String APP_ID = "991eu7d3kl1h";
-	private String SECRET = "38407e78-8c45-44e7-a653-a8e6e511ee8d";
+	private String APP_ID = "991bcd232alkj223";
+	private String SECRET ="tw0823232323u5T";
 	private String URL_CALLBACK = "/fcby?pAction=linklogin";
 	
 	protected OAuth_Link_Neta(HttpServletRequest request) {
 		super(request);
-		// TODO Auto-generated constructor stub
 	}
 	public void init(){
 		setAppID(APP_ID);
