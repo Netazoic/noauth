@@ -53,7 +53,7 @@ public abstract class OAuth_2 {
 
 	private String accessTokenString;
 	
-	protected OAuthService service;
+	public OAuthService service;
 	public Token requestToken;
 
 	protected Token accessToken;
@@ -126,6 +126,7 @@ public abstract class OAuth_2 {
 		/*
 		 * User scribe to do an accessToken request
 		 */
+		if(accessToken!=null) return accessToken;
 		if(requestToken == null) throw new Exception("requestToken not set");
 		if(verifier == null) throw new Exception ("verifier not set.");
 		accessToken =  service.getAccessToken(requestToken, verifier);
@@ -136,6 +137,8 @@ public abstract class OAuth_2 {
 		/*
 		 * User scribe to do an accessToken request
 		 */
+		if(accessToken!=null) return accessToken;
+
 		if(requestToken == null) throw new Exception("requestToken not set");
 		verifier = new Verifier(pin);
 		if(verifier == null) throw new Exception ("verifier not set.");
@@ -143,13 +146,12 @@ public abstract class OAuth_2 {
 		return accessToken;
 	}
 
-
-
 	public String getAccessToken(String code) throws Exception {
 		/*
 		 * Run a straight request for the access token an parse results
 		 * Must define tokenParm in the concrete class
 		 */
+
 		if(parmAccessToken == null) throw new Exception("tokenParm not set.");
 		urlToken  += code;
 

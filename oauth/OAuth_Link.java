@@ -44,7 +44,7 @@ OAuth User Secret:
 	 */
 	
 	public String urlAccessToken;
-	public String urlCallback;
+	public String urlCallback,urlCallbackQuery;
 	
 	public enum LINK_Param {
 		code,state,LINK_State, access_token,
@@ -76,9 +76,10 @@ OAuth User Secret:
 	}
 	
 	protected OAuth_Link(HttpServletRequest request){
-		urlCallback = request.getServerName() + urlCallback;
 		init();
+		urlCallback = request.getRequestURL() + urlCallbackQuery;
 		initService();
+
 	}
 
 	public void init(){
