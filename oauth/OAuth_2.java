@@ -26,17 +26,7 @@ import com.netazoic.oauth.OAuth_Link.LINK_Param;
 
 public abstract class OAuth_2 {
 
-	public static Map<String, String> fieldMap;
-	/* initialize with a block like the following:
-	 * map.<fbUser.field,app.field>
 
-    static {
-        Map<String, String> aMap = new HashMap<String,String>();
-        aMap.put("userEmail","wuEmail");
-        aMap.put("userName","wuFirstName");
-        fieldMap = Collections.unmodifiableMap(aMap);
-    }
-	 */
 	
 	//App Specific Settings
 	private String AppID="123456790";
@@ -48,7 +38,7 @@ public abstract class OAuth_2 {
 	protected String parmAccessToken = null; //e.g., FB_Param.access_token.name()
 	protected String parmReqState = null; //The state parameter as returned by the OAuth provider
 	protected String parmServerCheckState = null;
-	protected String parmRecordValParam = null;  //Param used in json records to identify a 
+	protected static String parmRecordValParam = null;  //Param used in json records to identify a 
 									  //value field in a map; e.g., "name"
 
 	private String accessTokenString;
@@ -60,15 +50,27 @@ public abstract class OAuth_2 {
 	protected Verifier verifier;
 
 
-	public Map<String,Object> userMap;
 	public OUser oUser;  //instantiate in concrete class
 	
 	public enum OAUTH_Param{
 		oauth_verifier,
 		oauth_token, oauth_token_secret;
 	}
-	public class OUser{
+	public abstract class OUser<T>{
 		public String json;
+		public Map<String,Object> userMap;
+		public Map<String, String> fieldMap;
+		/* initialize with a block like the following:
+		 * map.<fbUser.field,app.field>
+
+	    static {
+	        Map<String, String> aMap = new HashMap<String,String>();
+	        aMap.put("userEmail","wuEmail");
+	        aMap.put("userName","wuFirstName");
+	        fieldMap = Collections.unmodifiableMap(aMap);
+	    }
+		 */
+		
 		protected OUser(){}
 		public void deSerialize(String json) throws Exception{
 			this.json = json;
@@ -79,13 +81,14 @@ public abstract class OAuth_2 {
 			//TODO
 			//should be possible to do something like this . . .
 			//FBUser fbu = gson.fromJson(json, FBUser.class);
-			try{
+				try{
 				deSerializeObj(this,userMap);
 			}catch(Exception ex){
 				throw new Exception(ex);
 			}
 		}
 		public void setRequestVars(HttpServletRequest request){
+			if(fieldMap == null) fieldMap = initFieldMap();
 			setRequestVarsAllFields(this,request,fieldMap,true);
 		}
 	}
@@ -95,6 +98,25 @@ public abstract class OAuth_2 {
 		}
 	public void init(){}
 
+	protected Map initFieldMap(){
+		return null;
+		/* override with concrete class, e.g.,
+		Map<String, String> aMap = new HashMap<String,String>();
+		aMap.put("email","wuEMail");
+		aMap.put("name","wuName");
+		aMap.put("first_name","wuFirstName");
+		aMap.put("last_name","wuLastName");
+		aMap.put("employer","wuCompany");
+		aMap.put("position","wuTitle");
+		aMap.put("city","wuCity");
+		aMap.put("state","usStateName");
+		aMap.put("phone","wuTelephone");
+		aMap.put("cell","wuCell");
+		aMap.put("id","wuFBID");
+
+		aMap.put("password", "wuPassword");
+		return aMap */
+	}
 	public boolean checkState(HttpServletRequest request) throws Exception{
 		/*
 		 * Check to see if the returned state key matches the session stored state key
@@ -265,7 +287,7 @@ public abstract class OAuth_2 {
 	/* Utility Function */
 	
 
-	void deSerializeObj(Object obj,Map<String,?>userMap) throws IllegalAccessException{
+	static void deSerializeObj(Object obj,Map<String,?>userMap) throws IllegalAccessException{
 		Field[] flds = obj.getClass().getDeclaredFields();
 		String fldName;
 		Object valObj;
@@ -409,7 +431,7 @@ public abstract class OAuth_2 {
 	}
 
 
-	private String setVal(Object tgtObject,Field f,Object valObj,String valParam) throws IllegalArgumentException, IllegalAccessException, SecurityException {
+	private static String setVal(Object tgtObject,Field f,Object valObj,String valParam) throws IllegalArgumentException, IllegalAccessException, SecurityException {
 		/*
 		 * Set a value into an object field
 		 * Recurses on ArrayList values and HashMap values
@@ -420,6 +442,7 @@ public abstract class OAuth_2 {
 		 * e.g.,  location{id:"12341312",name:"Berkeley, California"}
 		 */
 		String val = null;
+		if(valParam == null) valParam = "name";
 		if(valObj==null)return val;
 		if(valObj instanceof ArrayList<?>){
 			ArrayList objArrayList = (ArrayList)valObj;

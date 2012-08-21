@@ -1,6 +1,7 @@
 package com.netazoic.oauth;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 
 public abstract class OAuth_FB extends OAuth_2 {
@@ -70,25 +71,8 @@ public abstract class OAuth_FB extends OAuth_2 {
 	 * initialize the fieldMap to hold assignments from fb user-record field names
      * to local app field names with a block like the following:
      * map.<fbUser.field,app.field>*/
-	/*
-    static {
-        Map<String, String> aMap = new HashMap<String,String>();
-        aMap.put("email","wuEMail");
-        aMap.put("name","wuName");
-        aMap.put("first_name","wuFirstName");
-        aMap.put("last_name","wuLastName");
-        aMap.put("employer","wuCompany");
-        aMap.put("position","wuTitle");
-        aMap.put("city","wuCity");
-        aMap.put("state","usStateName");
-        aMap.put("phone","wuTelephone");
-        aMap.put("cell","wuCell");
-        aMap.put("id","wuFBID");
+	
 
-        aMap.put("password", "wuPassword");
-        fieldMap = Collections.unmodifiableMap(aMap);
-    }
-    */
 	
 	/*
 	 * (non-Javadoc)
