@@ -1,4 +1,4 @@
-package com.netazoic.oauth;
+package com.netazoic.noauth;
 
 import java.io.BufferedInputStream;
 import java.io.FileOutputStream;
@@ -22,7 +22,7 @@ import org.scribe.oauth.OAuthService;
 
 import com.google.gson.Gson;
 import com.google.gson.internal.StringMap;
-import com.netazoic.oauth.OAuth_Link.LINK_Param;
+import com.netazoic.noauth.OAuth_Link.LINK_Param;
 
 public abstract class OAuth_2 {
 

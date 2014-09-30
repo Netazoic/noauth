@@ -1,4 +1,4 @@
-package com.netazoic.oauth;
+package com.netazoic.noauth;
 
 import javax.servlet.http.HttpServletRequest;
 
